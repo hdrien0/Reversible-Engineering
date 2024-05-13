@@ -1,0 +1,5 @@
+dill==0.3.8
+greenlet==3.0.3
+r2pipe==1.8.8
+SQLAlchemy==2.0.25
+typing_extensions==4.9.0

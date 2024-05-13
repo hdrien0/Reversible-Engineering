@@ -1,0 +1,22 @@
+FROM python:3.12-bookworm
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    socat \
+    gcc && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r app && useradd -r -g app app
+
+COPY chapter_0 .
+COPY logic.py .
+COPY generation_utils.py .
+
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+USER app
+
+EXPOSE 9997
+CMD ["socat", "-T60", "TCP-LISTEN:9997,reuseaddr,fork", "EXEC:/usr/local/bin/python3 server.py,pty,stderr,echo=0"]

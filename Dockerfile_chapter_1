@@ -1,0 +1,30 @@
+FROM python:3.12-bookworm
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    supervisor \
+    gcc \
+    socat && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r app && useradd -r -g app app
+
+COPY chapter_1 .
+COPY logic.py .
+COPY generation_utils.py .
+COPY db.py .
+
+RUN mkdir -p /run/supervisord && \
+    chown -R app:app /run/supervisord && \
+    chown -R app:app .
+
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+USER app
+
+EXPOSE 9998-9999
+
+CMD ["supervisord", "-c", "supervisord.conf"]
+

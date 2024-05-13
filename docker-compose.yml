@@ -1,0 +1,28 @@
+version: '3'
+services:
+  chapter0:
+    build:
+      context: .
+      dockerfile: Dockerfile_chapter_0
+    ports:
+      - "9997:9997"
+    container_name: chapter0
+
+  chapter1:
+    build:
+      context: .
+      dockerfile: Dockerfile_chapter_1
+    ports:
+      - "9998:9998"
+      - "9999:9999"
+    container_name: chapter1
+
+  chapter2:
+    build:
+      context: .
+      dockerfile: Dockerfile_chapter_2
+    ports:
+      - "9990:9990"
+      - "9991:9991"
+      - "9992:9992"
+    container_name: chapter2
